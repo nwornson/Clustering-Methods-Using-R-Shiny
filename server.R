@@ -65,28 +65,29 @@ pdata = cbind(pcdata$x[,1],pcdata$x[,2],pcdata$group)
 
 # Define server logic required to plot various variables against mpg
 shinyServer(function(input, output) {
-  
-  
-  # Compute the forumla text in a reactive expression since it is 
-  # shared by the output$caption and output$mpgPlot expressions
+
   formulaText <- reactive({
     paste(input$n,"clusters")
   })
   
-  # Return the formula text for printing as a caption
   output$caption <- renderText({
     formulaText()
   })
   
-  # Generate a plot of the requested variable against mpg and only 
-  # include outliers if requested
+# plot principal components
   output$pcplot <- renderPlot({
-    plot(pdata[,1],pdata[,2],col = pdata[,3])
+    plot(pdata[,1],pdata[,2],col = pdata[,3],
+         xlab = 'PC1',
+         ylab = 'PC2',
+         main = 'Actual')
   })
   
   output$kmplot <- renderPlot({
     kmeans_data = kmeans(pdata[,1:2],input$c)
-    plot(pdata[,1],pdata[,2],col = kmeans_data$cluster)
+    plot(pdata[,1],pdata[,2],col = kmeans_data$cluster,
+         xlab = 'PC1',
+         ylab = 'PC2',
+         main = 'K-Means Clusters')
   })
   
   output$scree = renderPlot({
@@ -96,7 +97,8 @@ shinyServer(function(input, output) {
       kmdata = kmeans(pdata[,1:2],i)
       withss[i] = kmdata$tot.withinss
     }
-    plot(seq(1,ctot),withss,type='b')
+    plot(seq(1,ctot),withss,type='b',
+         main = 'Elbow Plot')
     
   })
   
