@@ -98,8 +98,21 @@ shinyServer(function(input, output) {
       withss[i] = kmdata$tot.withinss
     }
     plot(seq(1,ctot),withss,type='b',
-         main = 'Elbow Plot')
+         main = 'Elbow Plot',
+         xlab = 'Number of Clusters',
+         ylab = 'Within Group Sum of Squares')
     
+  })
+  
+  output$hclust <- renderPlot({
+    ## heirarchical clustering
+    hc = hclust(dist(pdata[,-3]))
+    chc = cutree(hc,input$c)
+    plot(pdata[,-3],
+         col = chc,
+      xlab = 'PC1',
+      ylab = 'PC2',
+      main = 'Heirarchical Clustering')
   })
   
   
