@@ -1,5 +1,5 @@
 # Clustering-Methods-Using-R-Shiny
-Work in progress.  I want to explore different unsupervised clustering methods, and I would like to create an interactive shiny application.  Run the following line of code in an interactive R session to launch the app:
+Work in progress.  I want to explore different unsupervised clustering methods, and I would like to create an interactive shiny application.  Run the following 2 lines of code in an interactive R session to launch the app:
 
 library(shiny)
 
